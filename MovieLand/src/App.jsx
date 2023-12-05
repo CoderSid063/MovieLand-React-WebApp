@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import SearchIcon from "./search.svg";
 import "./App.css";
+import MovieCard from "./MovieCard";
 
 const API_URL = " http://www.omdbapi.com/?apikey=fc24ec70";
 
@@ -11,11 +12,12 @@ function App() {
   const searchMovies = async (title) => {
     const response = await fetch(`${API_URL}&s=${title}`);
     const data = await response.json();
+    setMovies(data.Search);
     console.log(data);
   };
 
   useEffect(() => {
-    searchMovies("spiderman");
+    searchMovies("batman");
   }, []);
 
   return (
@@ -38,7 +40,7 @@ function App() {
       {movies?.length > 0 ? (
         <div className="container">
           {movies.map((movie) => (
-            <MovieCard movie={movie} />
+            <MovieCard movie={movie} key={movie.imdbID} />
           ))}
         </div>
       ) : (
